@@ -1,4 +1,4 @@
-const WA = require('../external/clientWA');
+const WA = require('../app/clientWA');
 class SendCupoms
 {
     /**

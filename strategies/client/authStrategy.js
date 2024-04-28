@@ -19,22 +19,31 @@ class AuthStrategy
 
     #localAuth()
     {
-        let clientId = 'we23Wdff';
+        const session = require(sessionPath);
 
-        // let clientId = mcache.get('clientId');
-        if (clientId) {
+        /**
+         * For now, only one session is accepted
+         * TODO: Multi-device
+         */
+        let clientId;
+
+        if (session.length !== 0) {
+            clientId = session[0];
             return new LocalAuth({ clientId });
         }
 
-        clientId = crypto.randomUUID();
+        try {
+            clientId = crypto.randomUUID();
+            return new LocalAuth({
+                clientId
+            });
 
-        const auth = new LocalAuth({
-            clientId
-        });
-
-        mcache.put('clientId', clientId);
-
-        return auth;
+        } catch (e) {
+            console.error(e);
+        } finally {
+            session.push(clientId);
+            fs.writeFileSync(sessionPath, JSON.stringify(session));
+        }
     }
 
     async #remoteAuth()

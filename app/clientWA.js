@@ -23,4 +23,4 @@ module.exports = (async () => {
         .once('qr', (qr) => qrcode.generate(qr, {small: true}))
         .once('loading_screen', (percent, message) => console.log(`${message} - ${percent}%`))
         .once('authenticated', session => console.info('Logged'))
-})().catch(_ => _);
+})();

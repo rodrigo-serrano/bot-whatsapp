@@ -1,18 +1,14 @@
 const express = require('express');
 global.app = express();
 app.use(express.json());
-global.mcache = require('memory-cache');
 global.env = dotenv = require('dotenv').config().parsed;
+global.__basedir = __dirname;
 
 /**
- * Store client id in json, mcache is destroyed after server close
+ * Initilize session file
  */
-mcache.put('clientId', 'we23Wdff');
-/**
- * Middlewares
- */
-// require('./middleware/initSessionWA');
-console.info("[SERVER] Loading middlewares ......... OK");
+require('./app/sessionFile');
+
 
 /**
  * Reg routes here
@@ -31,7 +27,6 @@ const hostname = env.APP_HOSTNAME ?? "localhost"
 env.APP_SESSION = (['local', 'remote'].includes(env.APP_SESSION))
     ? env.APP_SESSION
     : 'local';
-// console.log(JSON.stringify(env));
 console.info("[SERVER] Initialize environments ..... OK");
 
 /**

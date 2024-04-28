@@ -13,10 +13,12 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
+    "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "flatted": "^3.3.1",
     "fs": "^0.0.1-security",
+    "memory-cache": "^0.2.0",
     "mongoose": "^8.3.2",
     "qrcode-terminal": "^0.12.0",
     "sqlite3": "^5.1.7",

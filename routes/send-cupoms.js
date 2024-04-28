@@ -1,8 +1,6 @@
-const { SendCupoms } = require("../services/SendCupoms");
+const { SendCupoms } = require("../services/sendCupoms");
 
-app.get('/', (req, res) => "Hello world");
-
-app.post('/send-cupoms', async (req, res) => {
+app.post('/api/v1/send-cupoms', async (req, res) => {
     const { cupoms } = req.body;
     console.log(cupoms);
     const service = new SendCupoms();

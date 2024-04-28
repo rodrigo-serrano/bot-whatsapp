@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
+const { mongoose } = require("mongoose");
 
-const mongoDb = mongoose.connect(env.MONGODB_URI);
+const mongoDb = (env.MONGODB_URI) ? mongoose.connect(env.MONGODB_URI) : undefined;
 
 module.exports = { mongoDb, mongoose }

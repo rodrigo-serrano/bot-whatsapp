@@ -1,8 +1,6 @@
-const { SendMessage } = require("../services/SendMessage");
+const { SendMessage } = require("../services/sendMessage");
 
-app.get('/', (req, res) => "Hello world");
-
-app.post('/send-message', async (req, res) => {
+app.post('/api/v1/send-message', async (req, res) => {
     const { groupId, content } = req.body;
     const service = new SendMessage();
     res.json(await service.execute(groupId, content));

@@ -5,9 +5,13 @@ global.mcache = require('memory-cache');
 global.env = dotenv = require('dotenv').config().parsed;
 
 /**
+ * Store client id in json, mcache is destroyed after server close
+ */
+mcache.put('clientId', 'we23Wdff');
+/**
  * Middlewares
  */
-require('./middleware/initSessionWA');
+// require('./middleware/initSessionWA');
 console.info("[SERVER] Loading middlewares ......... OK");
 
 /**

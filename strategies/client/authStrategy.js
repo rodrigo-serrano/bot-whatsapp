@@ -19,7 +19,9 @@ class AuthStrategy
 
     #localAuth()
     {
-        let clientId = mcache.get('clientId') ;
+        let clientId = 'we23Wdff';
+
+        // let clientId = mcache.get('clientId');
         if (clientId) {
             return new LocalAuth({ clientId });
         }

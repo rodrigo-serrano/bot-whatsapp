@@ -5,7 +5,7 @@ const qrcode = require("qrcode-terminal");
 /**
  * @type { Promise<WAWebJS.Client> }
  */
-module.exports = (async () => {
+const client = (async () => {
     return (new Client({
         authStrategy: await (new AuthStrategy).get(),
         webVersionCache: {
@@ -24,3 +24,5 @@ module.exports = (async () => {
         .once('loading_screen', (percent, message) => console.log(`${message} - ${percent}%`))
         .once('authenticated', session => console.info('Logged'))
 })();
+
+module.exports = { client }

@@ -3,38 +3,50 @@ const { MessageMedia } = require("whatsapp-web.js");
 
 class SendMessage
 {
+    data;
+
     /**
-     * TODO: Check content before send message
-     * @param content {{ message: ?string, img: ?string }}
-     * @param groupId
+     * @param data{{ groupId: string, content: { message: ?string, img: ?string } }}
      */
-    async execute(groupId, content)
+    constructor(data) {
+        this.data = data;
+    }
+
+    async execute()
     {
-        WA.then(async (client) => {
+        const media = await this.#_getMedia();
+        const suffix = this.#_getSuffix();
 
-            // const media = await MessageMedia.fromUrl(content.img);
-            await client.once('ready', async () => {
-                console.info('Sending message...')
-                // const sent = await client.sendMessage(groupId, media, {
-                //     caption: content.message +
-                //         "\n\n\n\n Mande \"CUPOM\" para receber os cupons do dia"
-                // });
-                const sent = await client.sendMessage(groupId, content.message);
+        let client = await WA.client;
 
-                /**
-                 * delay app for wait message send before destroy client
-                 */
-                await this.#wait(1000);
-                console.log('Message sent with body:', sent.body)
+        await client.once('ready', async () => {
+            console.info('Sending message...')
 
-                await client.destroy();
-            }).initialize().catch(_ => _);
-        })
+            let sent = (media)
+                ? await client.sendMessage(this.data.groupId, media, { caption: this.data.content.message + suffix })
+                : await client.sendMessage(this.data.groupId, this.data.content.message + suffix);
+
+            /**
+             * delay app for wait message send before destroy client
+             */
+            await this.#_wait(2_000);
+            console.log('Message sent with body:', sent.body)
+
+            await client.destroy();
+        }).initialize();
 
         return { "success": true };
     }
 
-    #wait = (msec) => new Promise((resolve, _) => setTimeout(resolve, msec));
+    #_getMedia = async () =>  (this.data.content?.img)
+        ? await MessageMedia.fromUrl(this.data.content.img)
+        : null;
+
+    #_getSuffix = () => (this.data.content?.suffix)
+        ? `\n\n\n${this.data.content.suffix}`
+        : '';
+
+     #_wait = (msec) => new Promise((resolve, _) => setTimeout(resolve, msec));
 }
 
 module.exports = { SendMessage }

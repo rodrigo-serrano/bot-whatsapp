@@ -5,6 +5,13 @@ global.env = dotenv = require('dotenv').config().parsed;
 global.__basedir = __dirname;
 
 /**
+ * Get error without crash
+ * Added for puppeteer
+ */
+process.on('uncaughtException', (err) => console.log(err));
+
+
+/**
  * Initilize session file
  */
 require('./app/sessionFile');

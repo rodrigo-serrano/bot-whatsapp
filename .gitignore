@@ -5,3 +5,4 @@ store/session.json
 dist/*
 !dist/.gitkeep
 !dist/store
+.idea
